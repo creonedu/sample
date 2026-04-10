@@ -1,0 +1,352 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+#A{font-family:'Noto Sans KR',var(--font-sans),sans-serif;background:var(--color-background-tertiary);min-height:740px;font-size:13px;color:var(--color-text-primary)}
+.hd{background:var(--color-background-primary);border-bottom:3px solid #E55C20;padding:13px 22px;display:flex;align-items:center;gap:12px}
+.hd-logo{width:36px;height:36px;background:#E55C20;border-radius:9px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;flex-shrink:0}
+.hd-t h1{font-size:15px;font-weight:700;color:#1A2B5E}
+.hd-t p{font-size:11px;color:var(--color-text-secondary)}
+.hd-sv{margin-left:auto;font-size:11px;color:#059669;display:none;flex-shrink:0}
+.tabs{background:var(--color-background-primary);display:flex;border-bottom:1px solid var(--color-border-tertiary);padding:0 20px;overflow-x:auto}
+.tab{padding:11px 16px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:500;color:var(--color-text-secondary);border-bottom:2.5px solid transparent;white-space:nowrap;transition:all .15s}
+.tab.on{color:#E55C20;border-bottom-color:#E55C20;font-weight:700}
+.tab:hover:not(.on){color:#1A2B5E}
+.panel{display:none;padding:18px 22px}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.ct{font-size:13px;font-weight:700;color:#1A2B5E;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--color-border-tertiary);display:flex;align-items:center;gap:7px}
+.ct::before{content:'';width:3px;height:14px;background:#E55C20;border-radius:2px;flex-shrink:0}
+.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fi{display:flex;flex-direction:column;gap:4px}
+.fi.s2{grid-column:span 2}.fi.sf{grid-column:1/-1}
+.fi label{font-size:11px;font-weight:500;color:var(--color-text-secondary)}
+.fi input,.fi select,.fi textarea{padding:8px 11px;border:0.5px solid var(--color-border-secondary);border-radius:8px;font-family:inherit;font-size:12px;background:var(--color-background-primary);color:var(--color-text-primary);transition:border-color .15s}
+.fi input:focus,.fi select:focus,.fi textarea:focus{outline:none;border-color:#E55C20;border-width:1px}
+.fi textarea{resize:vertical;min-height:60px}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.btn{padding:9px 20px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;transition:all .15s}
+.btn-p{background:#E55C20;color:#fff}.btn-p:hover{background:#C94E18;transform:translateY(-1px)}
+.btn-g{background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary)}
+.btn-g:hover{border-color:#E55C20;color:#E55C20}
+.btn-n{background:#1A2B5E;color:#fff}.btn-n:hover{background:#0F1C3A}
+.trk{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;color:#fff}
+.trk.GT{background:#E55C20}.trk.ST{background:#1A2B5E}.trk.NT{background:#059669}
+.rmh{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:14px}
+.rmh-top{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+.rmh-r{font-size:12px;color:var(--color-text-secondary);line-height:1.75}
+.glbl{font-size:14px;font-weight:700;color:#1A2B5E;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.glbl span{background:#1A2B5E;color:#fff;padding:2px 10px;border-radius:100px;font-size:11px;font-weight:500}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2px}
+.scard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;border-top:3px solid;padding:13px 14px;transition:transform .15s}
+.scard:hover{transform:translateY(-2px)}
+.scard.sp{border-top-color:#F97316}.scard.su{border-top-color:#0EA5E9}.scard.fa{border-top-color:#8B5CF6}.scard.wi{border-top-color:#4F6BF5}
+.sbadge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700;margin-bottom:8px}
+.sp .sbadge{background:#FFF3E8;color:#B04500}.su .sbadge{background:#E0F5FF;color:#066090}
+.fa .sbadge{background:#F3F0FF;color:#5830B0}.wi .sbadge{background:#EEEEFF;color:#3030A0}
+.slvrow{display:flex;align-items:center;gap:4px;margin:7px 0}
+.lf{background:var(--color-background-secondary);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;color:#1A2B5E}
+.arr{font-size:10px;color:var(--color-text-secondary)}
+.lt{background:#1A2B5E;color:#fff;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700}
+.si{font-size:11px;color:var(--color-text-secondary);line-height:1.7}
+.si b{color:#E55C20;font-weight:700}
+.sf2{font-size:11px;color:var(--color-text-primary);line-height:1.65;margin-top:7px;padding-top:7px;border-top:0.5px solid var(--color-border-tertiary)}
+.acard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.arow{display:grid;grid-template-columns:78px 1fr 1fr 1fr 1fr}
+.agrd{padding:16px 10px;text-align:center;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px}
+.agrd-n{font-size:16px;font-weight:700}.agrd-t{font-size:9px;opacity:.8}
+.acol{padding:12px 14px;border-left:0.5px solid var(--color-border-tertiary)}
+.acol h4{font-size:10px;font-weight:700;color:#E55C20;margin-bottom:4px}
+.acol p{font-size:11px;color:var(--color-text-secondary);line-height:1.65}
+.rep{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:28px 30px}
+.rep-hd{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2px solid #E55C20;margin-bottom:16px}
+.rep-logo{width:32px;height:32px;background:#E55C20;border-radius:7px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
+.rep-info{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.rep-info label{font-size:10px;color:var(--color-text-secondary);display:block;margin-bottom:2px}
+.rep-info span{font-size:12px;font-weight:500}
+.rep-tk{border-left:3px solid;border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;background:var(--color-background-secondary)}
+.rep-st{font-size:13px;font-weight:700;color:#1A2B5E;margin-bottom:8px;padding-left:8px;border-left:3px solid #E55C20}
+.rep-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.rep-tbl th{background:#1A2B5E;color:#fff;padding:7px 8px;text-align:center;font-weight:500;font-size:10px}
+.rep-tbl td{padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+.rep-tbl tr:nth-child(even) td{background:var(--color-background-secondary)}
+.tc{text-align:center}.tn{text-align:center;font-weight:700;color:#1A2B5E}.ts{text-align:center;font-weight:700;color:#E55C20}
+.pf{background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;font-weight:700;color:#1A2B5E;font-size:10px}
+.pt{background:#1A2B5E;color:#fff;padding:1px 5px;border-radius:3px;font-weight:700;font-size:10px}
+.rep-foot{margin-top:18px;padding-top:12px;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-secondary)}
+.rbar{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:8px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--color-text-secondary)}
+.empty{text-align:center;padding:60px 20px}
+.empty-i{font-size:32px;margin-bottom:10px}
+.empty h3{font-size:14px;font-weight:700;color:#1A2B5E;margin-bottom:5px}
+.empty p{font-size:12px;color:var(--color-text-secondary)}
+.gen-ok{display:none;background:#F0FDF4;border:0.5px solid #86EFAC;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:#166534}
+@media(max-width:700px){
+  .fg{grid-template-columns:1fr 1fr}.fi.s2,.fi.sf{grid-column:1/-1}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .arow{grid-template-columns:68px 1fr 1fr}.acol:nth-child(n+4){display:none}
+  .rep-info{grid-template-columns:repeat(2,1fr)}
+}
+@media print{
+  .hd,.tabs,.panel:not(#p3),.acts,.btn,.rbar{display:none!important}
+  #p3{display:block!important;padding:0!important}
+  .rep{border:none;border-radius:0;padding:0}
+  @page{size:A4 portrait;margin:13mm 16mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+
+<div id="A">
+<div class="hd">
+  <div class="hd-logo">C</div>
+  <div class="hd-t"><h1>크레버스 학습 로드맵 생성기</h1><p>영통청담어학원 · 2026 교육연구소 · Jake Kim</p></div>
+  <div class="hd-sv" id="sv">✓ 저장됨</div>
+</div>
+<nav class="tabs">
+  <button class="tab on" onclick="gT(0)">📋 학생정보 입력</button>
+  <button class="tab" onclick="gT(1)">📚 영어 로드맵</button>
+  <button class="tab" onclick="gT(2)">🎓 진학 로드맵</button>
+  <button class="tab" onclick="gT(3)">📄 통합 리포트</button>
+</nav>
+
+<div id="p0" class="panel on">
+  <div id="ok-msg" class="gen-ok">✅ 로드맵이 생성되었습니다! 탭을 클릭해 확인하세요.</div>
+  <div class="card">
+    <div class="ct">기본 정보</div>
+    <div class="fg">
+      <div class="fi"><label>학생 이름</label><input id="fn" placeholder="홍길동"></div>
+      <div class="fi"><label>학교명</label><input id="fsc" placeholder="영통중학교"></div>
+      <div class="fi"><label>현재 학년</label>
+        <select id="fgr"><option value="초4">초등 4학년</option><option value="초5">초등 5학년</option><option value="초6">초등 6학년</option><option value="중1" selected>중학교 1학년</option><option value="중2">중학교 2학년</option><option value="중3">중학교 3학년</option></select>
+      </div>
+      <div class="fi"><label>현재 학기</label>
+        <select id="fsm"><option value="봄">봄 (3~5월)</option><option value="여름">여름 (6~8월)</option><option value="가을">가을 (9~11월)</option><option value="겨울">겨울 (12~2월)</option></select>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">영어 레벨 정보</div>
+    <div class="fg">
+      <div class="fi"><label>현재 ESL 레벨</label>
+        <select id="flv"><option value="Mega">Mega</option><option value="Giga">Giga</option><option value="Tera">Tera</option><option value="Bridge" selected>Bridge</option><option value="Par">Par</option><option value="Birdie">Birdie</option><option value="Eagle">Eagle</option><option value="Alba">Alba</option><option value="Alba+">Alba+</option><option value="Master 1">Master 1</option><option value="Global Masters">Global Masters</option></select>
+      </div>
+      <div class="fi"><label>TOEFL iBT 점수</label><input id="ft" type="number" placeholder="예: 75"></div>
+      <div class="fi"><label>TOEFL Jr. 점수</label><input id="ftj" type="number" placeholder="예: 750"></div>
+      <div class="fi"><label>영어 자가평가</label>
+        <select id="fel"><option value="기초">기초 — 기본 문장 이해</option><option value="초중급">초중급 — 일상 대화 가능</option><option value="중급" selected>중급 — 영어 지문 독해</option><option value="중상급">중상급 — 고급 지문 읽기</option><option value="고급">고급 — 원어민 수준</option></select>
+      </div>
+      <div class="fi s2"><label>관심 분야 / 특기</label><input id="fint" placeholder="예: 과학, 수학, AI, 음악, 독서..."></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">진학 목표</div>
+    <div class="fg">
+      <div class="fi"><label>지망 고교 유형</label>
+        <select id="fhs"><option value="외고/국제고">외국어고 / 국제고 (GT)</option><option value="전국자사고">전국 자사고 / 민사고 (GT/ST)</option><option value="광역자사고">광역 자사고 (ST)</option><option value="과학고/영재학교">과학고 / 영재학교 (ST)</option><option value="일반고(특구)" selected>일반고 특구/혁신 (NT)</option><option value="일반고">일반고 (NT)</option></select>
+      </div>
+      <div class="fi"><label>지망 대학</label><input id="fu" placeholder="예: 서울대, 연세대, 고려대"></div>
+      <div class="fi"><label>희망 전공</label><input id="fm" placeholder="예: 의학, 법학, 공학"></div>
+      <div class="fi sf"><label>추가 참고 사항 (강점·약점·학습 스타일)</label><textarea id="fnt" placeholder="학생 특이사항, 보완이 필요한 영역, 학습 스타일 등 자유롭게 입력..."></textarea></div>
+    </div>
+  </div>
+  <div class="acts">
+    <button class="btn btn-g" onclick="doReset()">초기화</button>
+    <button class="btn btn-p" onclick="doGen()">🚀 로드맵 생성하기</button>
+  </div>
+</div>
+
+<div id="p1" class="panel"><div id="p1c"><div class="empty"><div class="empty-i">📚</div><h3>아직 로드맵이 없습니다</h3><p>학생정보 탭에서 정보를 입력하고 생성해주세요.</p></div></div></div>
+<div id="p2" class="panel"><div id="p2c"><div class="empty"><div class="empty-i">🎓</div><h3>아직 로드맵이 없습니다</h3><p>학생정보 탭에서 정보를 입력하고 생성해주세요.</p></div></div></div>
+<div id="p3" class="panel"><div id="p3c"><div class="empty"><div class="empty-i">📄</div><h3>리포트를 생성해주세요</h3><p>로드맵 생성 후 A4 PDF 출력이 가능합니다.</p></div></div></div>
+</div>
+
+<script>
+var D=null,SI=null;
+var LN=['Mega','Giga','Tera','Bridge','Par','Birdie','Eagle','Alba','Alba+','Master 1','Global Masters'];
+var LI={};LN.forEach(function(l,i){LI[l]=i;});
+var GR=['초4','초5','초6','중1','중2','중3'];
+var AG=['초4','초5','초6','중1','중2','중3','고1','고2','고3'];
+var SO=['봄','여름','가을','겨울'];
+var SSC={봄:'spring',여름:'summer',가을:'fall',겨울:'winter'};
+var SF={봄:'봄(3~5월)',여름:'여름(6~8월)',가을:'가을(9~11월)',겨울:'겨울(12~2월)'};
+var SE={spring:'🌸',summer:'☀️',fall:'🍂',winter:'❄️'};
+var SM={spring:'봄 (3~5월)',summer:'여름 (6~8월)',fall:'가을 (9~11월)',winter:'겨울 (12~2월)'};
+var GC={'중1':'#0D9065','중2':'#0891B2','중3':'#7C3AED','고1':'#D97706','고2':'#DC2626','고3':'#E55C20','초4':'#64748B','초5':'#475569','초6':'#334155'};
+
+function gf(id){return document.getElementById(id);}
+function gT(i){document.querySelectorAll('.tab').forEach(function(b,n){b.classList.toggle('on',n===i)});document.querySelectorAll('.panel').forEach(function(p,n){p.classList.toggle('on',n===i)});}
+function getData(){return{name:gf('fn').value.trim()||'학생',school:gf('fsc').value.trim()||'',grade:gf('fgr').value,sem:gf('fsm').value,level:gf('flv').value,tiBT:gf('ft').value||'미응시',tJr:gf('ftj').value||'미응시',elv:gf('fel').value,interests:gf('fint').value||'미기재',hs:gf('fhs').value,uni:gf('fu').value||'미정',major:gf('fm').value||'미정',notes:gf('fnt').value||''};}
+function doReset(){['fn','fsc','ft','ftj','fint','fu','fm','fnt'].forEach(function(id){gf(id).value='';});gf('fgr').value='중1';gf('fsm').value='봄';gf('flv').value='Bridge';gf('fel').value='중급';gf('fhs').value='일반고(특구)';}
+function setForm(d){if(!d)return;var M={name:'fn',school:'fsc',grade:'fgr',sem:'fsm',level:'flv',elv:'fel',interests:'fint',hs:'fhs',uni:'fu',major:'fm',notes:'fnt'};Object.keys(M).forEach(function(k){if(d[k]&&d[k]!=='미응시'&&d[k]!=='학생'){try{gf(M[k]).value=d[k];}catch(e){}}});if(d.tiBT&&d.tiBT!=='미응시')gf('ft').value=d.tiBT;if(d.tJr&&d.tJr!=='미응시')gf('ftj').value=d.tJr;}
+async function doSave(){try{await window.storage.set('cv2_si',JSON.stringify(SI));await window.storage.set('cv2_d',JSON.stringify(D));var s=gf('sv');s.style.display='block';setTimeout(function(){s.style.display='none';},2000);}catch(e){}}
+async function doLoad(){try{var ri=await window.storage.get('cv2_si');if(ri){SI=JSON.parse(ri.value);setForm(SI);}}catch(e){}try{var rd=await window.storage.get('cv2_d');if(rd){D=JSON.parse(rd.value);renderAll();}}catch(e){}}
+
+/* ── TRACK ── */
+function getTrack(hs){if(/외고|국제고|전국자사고/.test(hs))return'GT';if(/광역자사고|과학고|영재/.test(hs))return'ST';return'NT';}
+var TF={GT:'Global Masters',ST:'Master 1',NT:'Eagle'};
+var TN={GT:'GT [Global Track]',ST:'ST [Special Track]',NT:'NT [National Track]'};
+
+/* ── SEMESTER LIST ── */
+function getSems(grade,sem){var r=[];var gi=GR.indexOf(grade);if(gi<0)gi=3;var si=SO.indexOf(sem);if(si<0)si=0;for(var g=gi;g<GR.length;g++){for(var s=(g===gi?si:0);s<SO.length;s++){r.push({grade:GR[g],sem:SO[s]});}}return r;}
+
+/* ── COURSES ── */
+var CRS={
+  GT:{Mega:['April','CR+CTP'],Giga:['April','CR+CTP'],Tera:['CDI','CR+CTP'],'Bridge':['CDI','ESL+Master'],'Par':['CDI','ESL+Master'],'Birdie':['CDI','TO+Master'],'Eagle':['CDI','TO+Master'],'Alba':['CDI','Master'],'Alba+':['CDI','Master'],'Master 1':['CDI','Global Masters'],'Global Masters':['CDI','Global Masters']},
+  ST:{Mega:['April','Sapling'],Giga:['April','Sapling'],Tera:['CDI','ESL+CTP'],'Bridge':['CDI','ESL+TO'],'Par':['CDI','ESL+TO'],'Birdie':['CDI','TO'],'Eagle':['CDI','TO'],'Alba':['CDI','EFL내신'],'Alba+':['CDI','고등S반'],'Master 1':['CDI','고등S반'],'Global Masters':['CDI','고등S반']},
+  NT:{Mega:['April','Sprout'],Giga:['April','Sprout'],Tera:['CDI','ESL+CR'],'Bridge':['CDI','ESL+CTP/TO'],'Par':['CDI','EFL'],'Birdie':['CDI','EFL'],'Eagle':['CDI','EFL내신'],'Alba':['CDI','고등A반'],'Alba+':['CDI','고등A반'],'Master 1':['CDI','고등A반'],'Global Masters':['CDI','고등A반']}
+};
+function getCrs(tr,lv){return(CRS[tr]&&CRS[tr][lv])||['CDI','EFL'];}
+
+/* ── SCORE ── */
+function getScore(tr,lv,gr){
+  var GT_S={'Tera':'TOEFL Jr. 600','Bridge':'TOEFL Jr. 650','Par':'TOEFL Jr. 750 / GE9','Birdie':'iBT 90점 / GE9','Eagle':'iBT 90~100점','Alba':'iBT 100~110점','Alba+':'iBT 110점','Master 1':'iBT 115점','Global Masters':'iBT 115점 / SAT 1400점'};
+  var ST_S={'Tera':'TOEFL Jr. 600','Bridge':'TOEFL Jr. 700','Par':'TOEFL Jr. 750','Birdie':'TOEFL Jr. 800 / iBT 75점','Eagle':'iBT 85점','Alba':'iBT 95점','Alba+':'iBT 100점','Master 1':'iBT 100점 / 내신 1등급'};
+  var NT_S={중1:'고1모평 2등급 / SR 6.0~7.8',중2:'고2모평 1등급 / SR 8.0~9.0',중3:'고3모평 1등급 / 내신 A / SR 9.0~10.0',고1:'수능영어 1등급 토대',고2:'수능영어 1등급 확립',고3:'수능영어 1등급 완성'};
+  if(tr==='GT')return GT_S[lv]||'TOEFL Jr. 700';
+  if(tr==='ST')return ST_S[lv]||'TOEFL Jr. 700';
+  return NT_S[gr]||'고1모평 1등급';
+}
+
+/* ── VOCAB ── */
+var VOC={초4:{봄:'500개',여름:'700개',가을:'1,000개',겨울:'1,200개'},초5:{봄:'1,200개',여름:'1,500개',가을:'1,800개',겨울:'2,000개'},초6:{봄:'2,000개',여름:'2,500개',가을:'2,800개',겨울:'3,000개'},중1:{봄:'2,000개',여름:'2,500개',가을:'3,000개',겨울:'3,000개'},중2:{봄:'4,000개',여름:'4,500개',가을:'5,000개',겨울:'5,000개'},중3:{봄:'6,000개',여름:'7,000개',가을:'8,000개',겨울:'8,000개'}};
+function getVoc(gr,sem){return(VOC[gr]&&VOC[gr][sem])||'3,000개';}
+
+/* ── FOCUS ── */
+var FOC={
+  GT:{'Mega':'영어 기초 발음과 기초 어휘를 집중 학습합니다.','Giga':'기초 문장 구조와 핵심 어휘를 확립합니다.','Tera':'CR+CTP 과정으로 독해와 쓰기 기초를 완성합니다.','Bridge':'ESL+Master 병행으로 원서 독해력을 집중 향상합니다.','Par':'TOEFL 유형 독해와 고급 어휘를 체계적으로 확장합니다.','Birdie':'TO+Master 과정으로 심화 토론·작문 역량을 강화합니다.','Eagle':'iBT Speaking·Writing 집중 훈련으로 90점 이상을 목표합니다.','Alba':'Global Masters 과정 진입을 위한 학문적 영어를 완성합니다.','Alba+':'SAT 준비와 글로벌 수준 읽기·쓰기 역량을 병행합니다.','Master 1':'Global Masters 수료 및 해외 대학 진학 역량을 완성합니다.','Global Masters':'원어민 수준 영어 역량과 국제 학술 역량을 완성합니다.'},
+  ST:{'Mega':'기초 영어 발음과 어휘를 형성합니다.','Giga':'기초 문장 읽기와 핵심 어휘를 학습합니다.','Tera':'ESL+CTP 과정으로 독해 기초와 문법 체계를 완성합니다.','Bridge':'ESL+TO 병행으로 내신 A등급과 독해력 기반을 다집니다.','Par':'심화 독해로 TOEFL Jr. 850점 이상을 목표합니다.','Birdie':'TO 수업으로 내신 토대와 iBT 85점 기반을 완성합니다.','Eagle':'EFL·내신 연계 학습으로 고등내신 1등급 기반을 만듭니다.','Alba':'수능 영어 1등급과 내신 1등급을 동시에 달성합니다.','Alba+':'수능 1등급 완성과 고등 S반 심화 과정을 진행합니다.','Master 1':'최상위 내신과 수능 영어 1등급을 완벽히 마무리합니다.'},
+  NT:{'Mega':'영어 기초를 형성합니다.','Giga':'기초 문장 이해와 어휘를 학습합니다.','Tera':'ESL 과정으로 읽기와 문법 기초를 다집니다.','Bridge':'ESL+CTP/TO로 고1모평 2등급 기반을 완성합니다.','Par':'EFL 과정으로 고1모평 1등급 독해력을 강화합니다.','Birdie':'추론·빈칸 독해 완성으로 고1모의 1등급을 달성합니다.','Eagle':'EFL내신 연계로 수능 영어 1등급 토대를 완성합니다.','Alba':'수능 영어 1등급과 고등 내신 1~2등급을 유지합니다.'}
+};
+function getFoc(tr,lv){return(FOC[tr]&&FOC[tr][lv])||'이번 학기 학습을 충실히 이행하며 다음 레벨을 준비합니다.';}
+
+/* ── ENGLISH ROADMAP ── */
+function genER(info){
+  var tr=getTrack(info.hs);
+  var sems=getSems(info.grade,info.sem);
+  var n=sems.length;
+  if(n===0)return[];
+  var si=LI[info.level]!==undefined?LI[info.level]:3;
+  var ei=LI[TF[tr]]!==undefined?LI[TF[tr]]:6;
+  if(si>=ei)ei=Math.min(si+2,LN.length-1);
+  var lev=ei-si;
+  return sems.map(function(s,i){
+    var cp=lev>0?Math.floor(i*lev/n):0;
+    var tp=lev>0?Math.floor((i+1)*lev/n):0;
+    var ci=Math.min(si+cp,ei);
+    var ti=Math.min(si+tp,ei);
+    return{grade:s.grade,semester:SF[s.sem],sc:SSC[s.sem],curLv:LN[ci],tgtLv:LN[ti],courses:getCrs(tr,LN[ci]),score:getScore(tr,LN[ti],s.grade),vocab:getVoc(s.grade,s.sem),focus:getFoc(tr,LN[ci])};
+  });
+}
+
+/* ── ADMISSION ROADMAP ── */
+function genAR(info,tr){
+  var gi=AG.indexOf(info.grade);if(gi<0)gi=3;
+  var B={
+    '초4':{a:'주요과목 A등급 / 학습 습관 형성',e:'TOEFL Jr. 500~600점 / 어휘 500개',ac:'독서 습관 형성 / 다양한 경험',c:'기초 영어 레벨 설정 / 학습 방향 탐색'},
+    '초5':{a:'주요과목 A등급 / 수학 기초 강화',e:'TOEFL Jr. 600~650점 / 어휘 1,200개',ac:'독서 확장 / 관심 분야 탐색',c:'중학교 대비 로드맵 설계'},
+    '초6':{a:'중학교 예비 / 수학·국어 기초 강화',e:'TOEFL Jr. 650~700점 / 어휘 2,000개',ac:'독서/탐구 기초 / 중등 선행',c:'중학교 진학 전략 / 영어 레벨업 계획'},
+    '중1':{a:'주요과목 A등급 유지 / 전과목 기초 완성',e:'고1모평 2→1등급 / SR 6.0→7.8 / 어휘 2,000→3,000개',ac:'독서/탐구보고서 (연간 10권+) / 진로 체험',c:'진로 방향 탐색 / 지망고교 트랙 설정'},
+    '중2':{a:'주요과목 A등급 / 수학 심화 선행',e:'고2모평 2→1등급 / SR 8.0→9.0 / 어휘 4,000→5,000개',ac:'독서/탐구 심화 / 관심분야 보고서',c:'지망고교 입시 분석 / 진학 전략 수립'},
+    '중3':{a:'주요과목 A등급 / 고교 과정 선행',e:'고3모평 2→1등급 / SR 9.0→10.0 / 어휘 6,000→8,000개',ac:'자기소개서 1차 / 포트폴리오 기초',c:'고입 전략 확정 / 구술·면접 FINAL'},
+    '고1':{a:'5등급제 내신 1~2등급 / 주요과목 집중',e:'iBT 85점+ / 수능영어 1등급 토대 / 고1모의 1등급',ac:'수상경력 / 동아리 / 독서활동 기록',c:'학생부 설계 / 세특 관리 / 수시 방향 설정'},
+    '고2':{a:'내신 1등급 목표 / 수학·영어·국어 집중',e:'iBT 95~100점 / 수능 1등급 확립 / 고2모의 1등급',ac:'심화탐구·소논문 / 전공 관련 활동',c:'수시·정시 비율 결정 / 전형 분석 / 자소서'},
+    '고3':{a:'내신 최종 관리 / 수능 목표 등급 안정',e:'수능영어 1등급 완성 / 수능 최저 충족',ac:'자기소개서 최종 / 면접·구술 준비',c:'최종 원서 전략 / 수시 면접 / 정시 안전 분석'}
+  };
+  var OV={GT:{'중3':{c:'고입 최종 확정 / 외고 구술면접 FINAL'},'고1':{e:'iBT 110점+ / SAT 1200+ / Global Masters'},'고2':{e:'iBT 115점 / SAT 1400점 목표'},'고3':{e:'iBT 115점+ / SAT 1500+',c:'해외 대학 원서 / 외고 특기자 전형'}},ST:{'중3':{c:'자사고 입시 확정 / 구술면접 준비 FINAL'},'고1':{e:'iBT 100점 / 고1모의 1등급 / 수능 1등급 토대'},'고3':{e:'수능영어 1등급 / 내신 1등급 완성',c:'SKY·의치한 전략 / 수시면접 / 정시 안전망'}}};
+  var result=[];
+  for(var g=gi;g<AG.length;g++){
+    var gr=AG[g];
+    if(B[gr]){
+      var item={grade:gr,type:AG.indexOf(gr)>=6?'high':'middle',academic:B[gr].a,english:B[gr].e,activity:B[gr].ac,consulting:B[gr].c};
+      if(OV[tr]&&OV[tr][gr])Object.keys(OV[tr][gr]).forEach(function(k){var km={a:'academic',e:'english',ac:'activity',c:'consulting'};if(km[k])item[km[k]]=OV[tr][gr][k];});
+      result.push(item);
+    }
+  }
+  return result;
+}
+
+/* ── GENERATE ── */
+function doGen(){
+  SI=getData();
+  var tr=getTrack(SI.hs);
+  var er=genER(SI);
+  var ar=genAR(SI,tr);
+  var rsn={GT:SI.hs+'를 목표로 GT Track을 권장합니다. 외고·국제고 진학에는 iBT 110점 이상, Global Masters 수준의 고급 영어 역량이 필요하며, 중학교 기간 집중적인 레벨업이 요구됩니다.',ST:SI.hs+'를 목표로 ST Track을 권장합니다. 자사고 진학 및 SKY·의치한 입시를 위해 내신 1등급 유지와 iBT 100점 수준의 영어 역량이 필요합니다.',NT:SI.hs+' 진학 후 '+SI.uni+' '+SI.major+' 목표로 NT Track을 권장합니다. 내신 1~2등급 관리와 수능 영어 1등급 완성에 집중합니다.'};
+  var sum={GT:SI.name+' 학생은 현재 '+SI.level+' 레벨에서 출발하여 Global Masters까지 레벨업하는 GT Track 로드맵을 진행합니다. 중학교 기간 동안 iBT 110점 이상 및 SAT 1400점 이상을 목표로 집중 훈련하며, '+SI.uni+' '+SI.major+' 진학을 위한 글로벌 역량을 완성합니다. 영어 역량과 함께 내신·비교과·구술 역량을 균형 있게 개발하여 목표를 달성할 수 있습니다.',ST:SI.name+' 학생은 현재 '+SI.level+' 레벨에서 Master 1까지 레벨업하는 ST Track을 진행합니다. 중학교 기간 iBT 100점 달성 후 '+SI.hs+' 진학, 이후 '+SI.uni+' '+SI.major+' 진학을 목표합니다. 영어 고급 역량과 함께 전과목 내신을 철저히 관리하는 것이 핵심입니다.',NT:SI.name+' 학생은 '+SI.level+' 레벨에서 Eagle까지 성장하는 NT Track으로 '+SI.hs+' 진학 후 '+SI.uni+' '+SI.major+' 목표를 달성합니다. 중학교 기간 수능 영어 1등급 기반을 완성하고, 내신 1~2등급과 비교과 활동을 균형 있게 관리합니다. 체계적인 로드맵으로 충분히 목표를 달성할 수 있습니다.'};
+  D={track:tr,trackName:TN[tr],trackReason:rsn[tr],englishRoadmap:er,admissionRoadmap:ar,summary:sum[tr]};
+  renderAll();
+  doSave();
+  var ok=gf('ok-msg');ok.style.display='block';setTimeout(function(){ok.style.display='none';},3500);
+  gT(1);
+}
+
+/* ── RENDER ── */
+function renderAll(){if(!D)return;renderER();renderAR();renderRP();}
+
+function renderER(){
+  if(!D||!D.englishRoadmap||!D.englishRoadmap.length)return;
+  var by={};D.englishRoadmap.forEach(function(it){if(!by[it.grade])by[it.grade]=[];by[it.grade].push(it);});
+  var h='<div class="rbar"><span><b>'+SI.name+'</b> 학생 · '+D.trackName+'</span><button class="btn btn-g" style="padding:5px 12px;font-size:11px" onclick="gT(0)">✏️ 수정</button></div>';
+  h+='<div class="rmh"><div class="rmh-top"><span class="trk '+D.track+'">'+D.trackName+'</span><span style="font-size:12px;color:var(--color-text-secondary)">'+SI.name+' 학생 맞춤 영어 로드맵</span></div><div class="rmh-r">'+D.trackReason+'</div></div>';
+  Object.keys(by).forEach(function(gr){
+    h+='<div class="glbl"><span>'+gr+'</span> 영어학습 로드맵</div><div class="sgrid">';
+    by[gr].forEach(function(it){
+      var sc=it.sc||'spring';
+      var crs=Array.isArray(it.courses)?it.courses.join(' · '):it.courses;
+      var lvUp=it.curLv!==it.tgtLv;
+      h+='<div class="scard '+sc+'"><span class="sbadge">'+(SE[sc]||'')+' '+(SM[sc]||it.semester)+'</span>';
+      h+='<div class="slvrow"><span class="lf">'+it.curLv+'</span><span class="arr">→</span><span class="lt">'+it.tgtLv+'</span>'+(lvUp?'<span style="font-size:10px;color:#E55C20;margin-left:2px">⬆</span>':'')+'</div>';
+      h+='<div class="si"><b>수업</b> '+crs+'<br><b>목표</b> '+it.score+'<br><b>어휘</b> '+it.vocab+'</div>';
+      h+='<div class="sf2">'+it.focus+'</div></div>';
+    });
+    h+='</div>';
+  });
+  gf('p1c').innerHTML=h;
+}
+
+function renderAR(){
+  if(!D||!D.admissionRoadmap||!D.admissionRoadmap.length)return;
+  var h='<div class="rbar"><span><b>'+SI.name+'</b> 학생 · 목표: '+SI.hs+' → '+SI.uni+'</span><button class="btn btn-g" style="padding:5px 12px;font-size:11px" onclick="gT(0)">✏️ 수정</button></div>';
+  h+='<div class="rmh"><div class="rmh-top"><span style="font-size:14px;font-weight:700;color:#1A2B5E">'+SI.name+' 학생 고입·대입 진학 로드맵</span></div><div class="rmh-r">목표 고교: <b>'+SI.hs+'</b> &nbsp;→&nbsp; 목표 대학: <b>'+SI.uni+' '+SI.major+'</b></div></div>';
+  D.admissionRoadmap.forEach(function(it){
+    var col=GC[it.grade]||'#1A2B5E';
+    h+='<div class="acard"><div class="arow"><div class="agrd" style="background:'+col+'"><div class="agrd-n">'+it.grade+'</div><div class="agrd-t">'+(it.type==='high'?'고등학교':'중학교')+'</div></div>';
+    h+='<div class="acol"><h4>📝 교과 목표</h4><p>'+it.academic+'</p></div>';
+    h+='<div class="acol"><h4>📚 영어학습</h4><p>'+it.english+'</p></div>';
+    h+='<div class="acol"><h4>🌟 비교과</h4><p>'+it.activity+'</p></div>';
+    h+='<div class="acol"><h4>🎯 진로진학</h4><p>'+it.consulting+'</p></div>';
+    h+='</div></div>';
+  });
+  gf('p2c').innerHTML=h;
+}
+
+function renderRP(){
+  if(!D||!SI)return;
+  var td=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  var tc={GT:'#E55C20',ST:'#1A2B5E',NT:'#059669'};
+  var h='<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px">';
+  h+='<button class="btn btn-n" onclick="window.print()">🖨️ A4 PDF 출력</button>';
+  h+='<button class="btn btn-g" onclick="gT(0)">✏️ 수정</button></div>';
+  h+='<div class="rep">';
+  h+='<div class="rep-hd"><div style="display:flex;align-items:center;gap:12px"><div class="rep-logo">C</div><div><div style="font-size:17px;font-weight:700;color:#1A2B5E">크레버스 학습 로드맵</div><div style="font-size:11px;color:var(--color-text-secondary)">영통청담어학원 | 교육연구소</div></div></div><div style="text-align:right;font-size:11px;color:var(--color-text-secondary)"><div>'+td+'</div><div>담당: 제이크 연구소장</div></div></div>';
+  h+='<div class="rep-info">';
+  [['이름',SI.name],['학교/학년',SI.school+' '+SI.grade],['현재레벨',SI.level],['TOEFL iBT',SI.tiBT+'점'],['지망고교',SI.hs],['지망대학',SI.uni],['희망전공',SI.major],['관심분야',SI.interests]].forEach(function(f){h+='<div><label>'+f[0]+'</label><span>'+(f[1]||'—')+'</span></div>';});
+  h+='</div>';
+  h+='<div class="rep-tk" style="border-color:'+(tc[D.track]||'#E55C20')+'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span class="trk '+D.track+'">'+D.trackName+'</span><span style="font-size:12px;font-weight:700;color:#1A2B5E">종합 분석 및 학습 방향</span></div><p style="font-size:12px;line-height:1.8;color:var(--color-text-secondary)">'+D.summary+'</p></div>';
+  h+='<div style="margin-bottom:14px"><div class="rep-st">■ 영어학습 로드맵</div><table class="rep-tbl"><thead><tr><th>학년</th><th>학기</th><th>레벨 변화</th><th>수업</th><th>목표 점수</th><th style="text-align:left">핵심 포인트</th></tr></thead><tbody>';
+  D.englishRoadmap.forEach(function(it,i){
+    var sc=it.sc||'spring';var crs=Array.isArray(it.courses)?it.courses.join('·'):it.courses;
+    h+='<tr><td class="tn">'+it.grade+'</td><td class="tc">'+(SE[sc]||'')+' '+(SM[sc]||it.semester)+'</td><td class="tc"><span class="pf">'+it.curLv+'</span> → <span class="pt">'+it.tgtLv+'</span></td><td class="tc">'+crs+'</td><td class="ts">'+it.score+'</td><td style="font-size:10px;color:var(--color-text-secondary)">'+(it.focus||'').substring(0,50)+((it.focus||'').length>50?'...':'')+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div><div class="rep-st">■ 진학 로드맵</div><table class="rep-tbl"><thead><tr><th>학년</th><th style="text-align:left">교과 목표</th><th style="text-align:left">영어학습</th><th style="text-align:left">비교과</th><th style="text-align:left">진로진학</th></tr></thead><tbody>';
+  D.admissionRoadmap.forEach(function(it){
+    var col=GC[it.grade]||'#1A2B5E';
+    h+='<tr><td class="tn" style="color:'+col+'">'+it.grade+'</td><td style="font-size:10px">'+it.academic+'</td><td style="font-size:10px">'+it.english+'</td><td style="font-size:10px">'+it.activity+'</td><td style="font-size:10px">'+it.consulting+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="rep-foot"><div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;background:#E55C20;border-radius:5px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:10px">C</div>영통청담어학원 · 크레버스 영통점 교육연구소</div><div>Jake Kim 원장/연구소장</div></div>';
+  h+='</div>';
+  gf('p3c').innerHTML=h;
+}
+
+doLoad();
+</script>
