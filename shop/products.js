@@ -23,7 +23,7 @@ var CREON_SHOP = {
     name: '크레온에듀(주)',
     ceo: '김동욱',
     bizNumber: '147-87-03501',            // 사업자등록번호
-    mailOrderNumber: '신고번호 입력',       // 통신판매업 신고번호 (확인 후 입력)
+    mailOrderNumber: '제2026-서울중구-386호', // 통신판매업 신고번호
     address: '서울특별시 중구 퇴계로 15 에너지플러스 9층 (스파크플러스 919호)',
     phone: '010-9550-5506',
     email: 'creonedu@gmail.com',
