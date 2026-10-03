@@ -10,12 +10,13 @@
 </head>
 <body>
 
-<header class="hd"><div class="nav-pill">
+<header class="hd"><div class="top-nav">
   <a class="brand" href="./">
     <span class="logo">C</span>
-    <span class="brand-t"><b>크레온에듀</b><small>교재몰</small></span>
+    <span class="brand-t"><b>creon edu</b><small>교재몰</small></span>
   </a>
   <button class="cart-btn" id="cartBtn" aria-label="장바구니 열기">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Zm3 0V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
     <span class="cart-lbl">장바구니</span> <span class="badge" id="cartCount">0</span>
   </button>
 </div></header>
@@ -27,11 +28,16 @@
 <!-- ───────── 1. 교재 목록 ───────── -->
 <main id="viewList" class="wrap">
   <section class="hero">
-    <span class="eyebrow">크레온에듀 공식 교재몰</span>
-    <h1>레벨에 맞는 교재,<br>한 번에 구매하세요.</h1>
-    <p>학원 수령을 선택하면 배송비 없이 수업 시간에 받아볼 수 있습니다.</p>
+    <form class="search-pill" id="searchForm" role="search">
+      <label class="seg"><span>교재 찾기</span><input id="q" type="search" placeholder="교재명 또는 레벨 (예: Bridge)" autocomplete="off"></label>
+      <button class="search-orb" aria-label="검색"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    </form>
   </section>
   <nav class="chips" id="chips" aria-label="교재 분류"></nav>
+  <div class="list-hd">
+    <h1>우리 아이 레벨에 맞는 교재</h1>
+    <p>학원 수령을 선택하면 배송비 없이 수업 시간에 받아볼 수 있습니다.</p>
+  </div>
   <section class="grid" id="grid"></section>
 </main>
 

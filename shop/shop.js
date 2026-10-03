@@ -22,23 +22,31 @@
       return '<button class="chip' + (c === activeCat ? ' on' : '') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
     }).join('');
   }
+  var query = '';
   function coverHTML(p) {
     return '<div class="cover" style="background:' + coverColor(p) + '">' +
       (p.image ? '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + ' 표지" loading="lazy">' :
-        '<span class="cv-b">CREON EDU</span><span class="cv-lv">' + esc(p.level) + '</span><span class="cv-n">' + esc(p.name) + '</span>') +
+        '<span class="cv-b">CREON EDU</span><span class="cv-n">' + esc(p.name) + '</span><span class="cv-lv">' + esc(p.level) + '</span>') +
+      (p.soldOut ? '<span class="float-badge">품절</span>' : '<span class="float-badge">' + esc(p.category) + '</span>') +
       '</div>';
   }
+  function matches(p) {
+    if (activeCat !== SHOP.categories[0] && p.category !== activeCat) return false;
+    if (!query) return true;
+    var hay = (p.name + ' ' + p.level + ' ' + p.category + ' ' + p.desc).toLowerCase();
+    return hay.indexOf(query.toLowerCase()) !== -1;
+  }
   function renderGrid() {
-    var list = SHOP.products.filter(function (p) { return activeCat === SHOP.categories[0] || p.category === activeCat; });
+    var list = SHOP.products.filter(matches);
     $('grid').innerHTML = list.length ? list.map(function (p) {
       return '<article class="pc' + (p.soldOut ? ' soldout' : '') + '">' + coverHTML(p) +
-        '<div class="pc-b"><span class="pc-cat">' + esc(p.category) + ' · ' + esc(p.level) + '</span>' +
-        '<h3 class="pc-n">' + esc(p.name) + '</h3><p class="pc-d">' + esc(p.desc) + '</p>' +
-        '<div class="pc-f"><span class="price">' + won(p.price) + '</span>' +
-        (p.soldOut ? '<button class="btn btn-g" disabled>품절</button>'
-          : '<button class="btn btn-p" data-add="' + esc(p.id) + '">담기</button>') +
+        '<div class="pc-b"><div class="pc-top"><h3 class="pc-n">' + esc(p.name) + '</h3><span class="pc-lv">' + esc(p.level) + '</span></div>' +
+        '<p class="pc-d">' + esc(p.desc) + '</p>' +
+        '<div class="pc-f"><span class="price"><b>' + won(p.price) + '</b></span>' +
+        (p.soldOut ? '<button class="btn btn-s" disabled>품절</button>'
+          : '<button class="btn btn-s" data-add="' + esc(p.id) + '">담기</button>') +
         '</div></div></article>';
-    }).join('') : '<p class="empty">이 분류에는 아직 교재가 없습니다.</p>';
+    }).join('') : '<p class="empty">' + (query ? '‘' + esc(query) + '’에 맞는 교재가 없습니다.' : '이 분류에는 아직 교재가 없습니다.') + '</p>';
   }
 
   /* ── 장바구니 ── */
@@ -205,6 +213,8 @@
     else if (t.dataset.rm) changeQty(t.dataset.rm, -999);
   });
   $('cartBtn').onclick = function () { openCart(true); };
+  $('searchForm').onsubmit = function (e) { e.preventDefault(); query = $('q').value.trim(); renderGrid(); $('grid').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  $('q').oninput = function () { query = $('q').value.trim(); renderGrid(); };
   $('closeCart').onclick = $('dim').onclick = function () { openCart(false); };
   $('goCheckout').onclick = function () { goCheckout(); };
   $('backBtn').onclick = function () { history.back(); };
