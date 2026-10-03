@@ -26,7 +26,7 @@ function writeJSON(kind, key, val) {
 function removeKey(kind, key) { try { store(kind).removeItem(key); } catch (e) {} }
 
 /* 같은 색 규칙으로 레벨별 표지 색상 지정 */
-var COVER_COLORS = ['#1A2B5E', '#E55C20', '#0D9065', '#7C3AED', '#0891B2', '#D97706', '#DC2626', '#334155'];
+var COVER_COLORS = ['#2F4858', '#33658A', '#3D5A40', '#5B4B6E', '#7A5C3E', '#4A5759', '#1F3A5F', '#6B4E4E'];
 function coverColor(p) {
   var h = 0, s = p.category + p.level;
   for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
@@ -48,19 +48,31 @@ function isTestMode() { return /^test_/.test(SHOP.payment.tossClientKey); }
 
 function renderFooter() {
   var c = SHOP.company;
+  var info = [
+    ['상호', c.name], ['대표이사', c.ceo], ['사업자등록번호', c.bizNumber],
+    ['통신판매업신고', c.mailOrderNumber], ['주소', c.address],
+    ['고객센터', c.phone], ['이메일', c.email], ['개인정보보호책임자', c.privacyOfficer]
+  ];
   $('footer').innerHTML =
     '<div class="ft-in">' +
-    '<div class="ft-links">' +
+    '<div class="ft-cols">' +
+    '<div class="ft-col"><b>고객 안내</b>' +
     '<a href="#" data-policy="terms">이용약관</a>' +
-    '<a href="#" data-policy="privacy" class="strong">개인정보처리방침</a>' +
-    '<a href="#" data-policy="refund">교환·환불 정책</a>' +
+    '<a href="#" data-policy="privacy" class="em">개인정보처리방침</a>' +
+    '<a href="#" data-policy="refund">교환·환불 정책</a></div>' +
+    '<div class="ft-col"><b>고객센터</b>' +
+    '<a href="tel:' + esc(c.phone.replace(/\D/g, '')) + '">' + esc(c.phone) + '</a>' +
+    '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></div>' +
+    '<div class="ft-col"><b>' + esc(c.name) + '</b>' +
+    (c.website ? '<a href="' + esc(c.website) + '" target="_blank" rel="noopener">' + esc(c.service || '홈페이지') + ' ↗</a>' : '') +
+    '<a href="./">교재몰 홈</a></div>' +
     '</div>' +
-    '<b>' + esc(c.name) + '</b><br>' +
-    '대표이사 ' + esc(c.ceo) + ' · 사업자등록번호 ' + esc(c.bizNumber) + ' · 통신판매업신고 ' + esc(c.mailOrderNumber) + '<br>' +
-    '주소 ' + esc(c.address) + '<br>' +
-    '고객센터 ' + esc(c.phone) + ' · ' + esc(c.email) + ' · 개인정보보호책임자 ' + esc(c.privacyOfficer) + '<br>' +
-    '© ' + new Date().getFullYear() + ' ' + esc(c.name) + '. All rights reserved.' +
-    '</div>';
+    '<div class="legal">' +
+    '<dl class="ft-info">' + info.map(function (r) {
+      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+    }).join('') + '</dl>' +
+    '<p class="ft-copy">© ' + new Date().getFullYear() + ' ' + esc(c.name) + ' · 결제는 토스페이먼츠를 통해 안전하게 처리됩니다.</p>' +
+    '</div></div>';
 }
 
 /* ⚠️ 아래 약관 문구는 기본 예시입니다. 실제 오픈 전 반드시 법률 검토 후 교체하세요. */
