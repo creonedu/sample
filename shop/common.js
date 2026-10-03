@@ -48,18 +48,30 @@ function isTestMode() { return /^test_/.test(SHOP.payment.tossClientKey); }
 
 function renderFooter() {
   var c = SHOP.company;
+  var info = [
+    ['상호', c.name], ['대표이사', c.ceo], ['사업자등록번호', c.bizNumber],
+    ['통신판매업신고', c.mailOrderNumber], ['주소', c.address],
+    ['고객센터', c.phone], ['이메일', c.email], ['개인정보보호책임자', c.privacyOfficer]
+  ];
   $('footer').innerHTML =
     '<div class="ft-in">' +
-    '<div class="ft-links">' +
+    '<div class="ft-top">' +
+    '<div class="ft-brand"><div class="ft-mark">CREON EDU.</div>' +
+    '<p class="ft-tag">레벨에 맞는 교재를, 가장 간단하게.</p></div>' +
+    '<div class="ft-cols">' +
+    '<div class="ft-col"><b>고객 안내</b>' +
     '<a href="#" data-policy="terms">이용약관</a>' +
-    '<a href="#" data-policy="privacy" class="strong">개인정보처리방침</a>' +
-    '<a href="#" data-policy="refund">교환·환불 정책</a>' +
-    '</div>' +
-    '<b>' + esc(c.name) + '</b><br>' +
-    '대표이사 ' + esc(c.ceo) + ' · 사업자등록번호 ' + esc(c.bizNumber) + ' · 통신판매업신고 ' + esc(c.mailOrderNumber) + '<br>' +
-    '주소 ' + esc(c.address) + '<br>' +
-    '고객센터 ' + esc(c.phone) + ' · ' + esc(c.email) + ' · 개인정보보호책임자 ' + esc(c.privacyOfficer) + '<br>' +
-    '© ' + new Date().getFullYear() + ' ' + esc(c.name) + '. All rights reserved.' +
+    '<a href="#" data-policy="privacy" class="em">개인정보처리방침</a>' +
+    '<a href="#" data-policy="refund">교환·환불 정책</a></div>' +
+    '<div class="ft-col"><b>크레온에듀</b>' +
+    (c.website ? '<a href="' + esc(c.website) + '" target="_blank" rel="noopener">' + esc(c.service || '홈페이지') + ' ↗</a>' : '') +
+    '<a href="tel:' + esc(c.phone.replace(/\D/g, '')) + '">' + esc(c.phone) + '</a>' +
+    '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></div>' +
+    '</div></div>' +
+    '<dl class="ft-info">' + info.map(function (r) {
+      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+    }).join('') + '</dl>' +
+    '<p class="ft-copy">© ' + new Date().getFullYear() + ' ' + esc(c.name) + '. All rights reserved.</p>' +
     '</div>';
 }
 

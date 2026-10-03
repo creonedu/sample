@@ -21,13 +21,15 @@ var CREON_SHOP = {
   // ── 회사 정보 (페이지 하단 표시 · PG사 심사 필수 항목) ──
   company: {
     name: '크레온에듀(주)',
-    ceo: '대표자명 입력',
-    bizNumber: '000-00-00000',            // 사업자등록번호
-    mailOrderNumber: '제0000-지역-0000호',  // 통신판매업 신고번호
-    address: '사업장 주소 입력',
-    phone: '000-0000-0000',
-    email: 'contact@example.com',
-    privacyOfficer: '개인정보보호책임자 이름'
+    ceo: '김동욱',
+    bizNumber: '147-87-03501',            // 사업자등록번호
+    mailOrderNumber: '신고번호 입력',       // 통신판매업 신고번호 (확인 후 입력)
+    address: '서울특별시 중구 퇴계로 15 에너지플러스 9층 (스파크플러스 919호)',
+    phone: '010-9550-5506',
+    email: 'creonedu@gmail.com',
+    privacyOfficer: '김동욱',               // 개인정보보호책임자 (다른 분이면 수정)
+    service: '퀘스트온',                     // 운영 서비스명
+    website: 'https://www.queston.kr'
   },
 
   // ── 배송비 정책 ──

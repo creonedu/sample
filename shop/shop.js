@@ -64,8 +64,13 @@
     var a = calcAmounts(cart, 'pickup');
     $('cSub').textContent = won(a.sub);
     var fo = SHOP.shipping.freeOver;
-    $('cHint').textContent = !cart.length ? '' :
-      '학원 수령 시 배송비 무료' + (fo > 0 ? (a.sub >= fo ? ' · 택배도 무료배송!' : ' · 택배는 ' + won(fo - a.sub) + ' 더 담으면 무료') : '');
+    var hint = '';
+    if (cart.length) {
+      hint = '학원 수령 시 배송비 무료';
+      if (fo > 0) hint += a.sub >= fo ? ' <span class="save">택배도 무료배송</span>'
+        : ' · 택배는 <span class="save">' + won(fo - a.sub) + ' 더 담으면 무료</span>';
+    }
+    $('cHint').innerHTML = hint;
     $('goCheckout').disabled = !cart.length;
   }
   function changeQty(id, d) {
@@ -134,7 +139,7 @@
     need('fEmail', !val('fEmail') || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('fEmail')));
     need('fStudent', val('fStudent').length >= 2);
     if (delivery() === 'ship') { need('fZip', !!val('fZip')); need('fAddr1', !!val('fAddr1')); need('fAddr2', !!val('fAddr2')); }
-    if (bad.length) { $(bad[0]).focus(); return '빨간색으로 표시된 항목을 확인해주세요.'; }
+    if (bad.length) { $(bad[0]).focus(); return '표시된 항목을 확인해주세요.'; }
     if (!$('agreeAll').checked) return '약관 동의에 체크해주세요.';
     return '';
   }
