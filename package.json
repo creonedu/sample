@@ -1,0 +1,5 @@
+{
+  "name": "creonedu-textbook-shop",
+  "private": true,
+  "engines": { "node": ">=18" }
+}

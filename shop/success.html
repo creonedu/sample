@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주문 완료 · 크레온에듀</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+</head>
+<body>
+<header class="hd">
+  <a class="brand" href="./"><span class="logo">C</span><span class="brand-t"><b>크레온에듀 교재몰</b><small>CREON EDU · 공식 교재 구매</small></span></a>
+</header>
+<main class="wrap">
+  <div class="result" id="loading">
+    <div class="spin"></div>
+    <h1>결제를 확인하고 있습니다</h1>
+    <p class="lead">창을 닫지 말고 잠시만 기다려주세요.</p>
+  </div>
+
+  <div class="result" id="done" hidden>
+    <div class="icon">✅</div>
+    <h1>주문이 완료되었습니다</h1>
+    <p class="lead" id="doneLead"></p>
+    <section class="card">
+      <h3 class="ct">주문 정보</h3>
+      <dl class="kv" id="doneKv"></dl>
+    </section>
+    <div class="actions">
+      <a class="btn btn-g" id="receipt" target="_blank" rel="noopener" hidden>영수증 보기</a>
+      <a class="btn btn-p" href="./">교재몰 홈으로</a>
+    </div>
+  </div>
+
+  <div class="result" id="fail" hidden>
+    <div class="icon">⚠️</div>
+    <h1>결제 승인에 실패했습니다</h1>
+    <p class="lead" id="failMsg"></p>
+    <section class="card"><dl class="kv" id="failKv"></dl></section>
+    <div class="actions"><a class="btn btn-p" href="./#checkout">다시 주문하기</a></div>
+  </div>
+</main>
+<footer class="ft" id="footer"></footer>
+<script src="products.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var paymentKey = q.get('paymentKey'), orderId = q.get('orderId'), amount = Number(q.get('amount'));
+  var order = readJSON('sessionStorage', ORDER_KEY, null);
+
+  function kv(id, rows) {
+    $(id).innerHTML = rows.filter(function (r) { return r[1]; }).map(function (r) {
+      return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+    }).join('');
+  }
+  function fail(msg, code) {
+    $('loading').hidden = true; $('fail').hidden = false;
+    $('failMsg').textContent = msg;
+    kv('failKv', [['주문번호', orderId], ['오류 코드', code], ['문의', SHOP.company.phone]]);
+  }
+
+  if (!paymentKey || !orderId || !order || order.orderId !== orderId || order.amount !== amount) {
+    return fail('주문 정보가 확인되지 않습니다. 결제는 승인되지 않았으니 처음부터 다시 주문해주세요.', 'ORDER_MISMATCH');
+  }
+
+  fetch('/api/confirm', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ paymentKey: paymentKey, orderId: orderId, amount: amount, order: order })
+  }).then(function (r) {
+    return r.json().catch(function () { return { ok: false, message: '결제 승인 서버에 연결할 수 없습니다.', code: 'NO_SERVER_' + r.status }; });
+  }).then(function (res) {
+    if (!res.ok) return fail(res.message || '알 수 없는 오류가 발생했습니다.', res.code);
+    removeKey('sessionStorage', ORDER_KEY);
+    removeKey('localStorage', CART_KEY);
+    $('loading').hidden = true; $('done').hidden = false;
+    $('doneLead').textContent = order.delivery === 'pickup'
+      ? '교재는 ' + (order.customer.className || '소속 반') + ' 수업 시간에 전달해드립니다.'
+      : '영업일 기준 2~3일 이내에 출고됩니다.';
+    kv('doneKv', [
+      ['주문번호', orderId], ['주문 교재', order.orderName], ['결제 금액', won(amount)],
+      ['결제 수단', res.method], ['학생', order.customer.student],
+      ['받는 방법', order.delivery === 'pickup' ? '학원에서 받기' : '택배'],
+      ['배송지', order.address ? order.address.addr1 + ' ' + order.address.addr2 : '']
+    ]);
+    if (res.receiptUrl) { $('receipt').href = res.receiptUrl; $('receipt').hidden = false; }
+  }).catch(function () {
+    fail('결제 승인 서버에 연결할 수 없습니다. (사이트가 아직 배포되지 않은 미리보기 상태일 수 있습니다)', 'NETWORK');
+  });
+})();
+</script>
+</body>
+</html>

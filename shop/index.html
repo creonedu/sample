@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>크레온에듀 교재몰</title>
+<meta name="description" content="크레온에듀(주) 공식 교재 구매 페이지">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+</head>
+<body>
+
+<header class="hd">
+  <a class="brand" href="./">
+    <span class="logo">C</span>
+    <span class="brand-t"><b>크레온에듀 교재몰</b><small>CREON EDU · 공식 교재 구매</small></span>
+  </a>
+  <button class="cart-btn" id="cartBtn" aria-label="장바구니 열기">
+    🛒 <span class="cart-lbl">장바구니</span> <span class="badge" id="cartCount">0</span>
+  </button>
+</header>
+
+<div class="test-banner" id="testBanner" hidden>
+  🧪 지금은 <b>테스트 모드</b>입니다. 결제해도 실제로 돈이 빠져나가지 않습니다.
+</div>
+
+<!-- ───────── 1. 교재 목록 ───────── -->
+<main id="viewList" class="wrap">
+  <section class="hero">
+    <h1>우리 아이 레벨에 맞는 교재,<br>여기서 한 번에 구매하세요</h1>
+    <p>학원 수령을 선택하시면 배송비 없이 수업 시간에 받아보실 수 있습니다.</p>
+  </section>
+  <nav class="chips" id="chips" aria-label="교재 분류"></nav>
+  <section class="grid" id="grid"></section>
+</main>
+
+<!-- ───────── 2. 주문/결제 ───────── -->
+<main id="viewCheckout" class="wrap" hidden>
+  <button class="back" id="backBtn">← 교재 목록으로</button>
+  <h2 class="page-t">주문 / 결제</h2>
+  <div class="co">
+    <div class="co-main">
+      <section class="card">
+        <h3 class="ct">주문 교재</h3>
+        <ul class="sum-list" id="coItems"></ul>
+      </section>
+
+      <section class="card">
+        <h3 class="ct">주문자 · 학생 정보</h3>
+        <div class="fg">
+          <label class="fi"><span>주문자(학부모) 이름 *</span><input id="fName" autocomplete="name" placeholder="홍길동"></label>
+          <label class="fi"><span>휴대폰 번호 *</span><input id="fPhone" inputmode="numeric" autocomplete="tel" placeholder="01012345678"></label>
+          <label class="fi s2"><span>이메일 (영수증 수신)</span><input id="fEmail" type="email" autocomplete="email" placeholder="example@email.com"></label>
+          <label class="fi"><span>학생 이름 *</span><input id="fStudent" placeholder="홍아름"></label>
+          <label class="fi"><span>소속 캠퍼스 / 반</span><input id="fClass" placeholder="영통캠퍼스 Bridge A반"></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="ct">받는 방법</h3>
+        <div class="radio-row">
+          <label class="radio"><input type="radio" name="delivery" value="pickup" checked><span><b>학원에서 받기</b><small>배송비 무료 · 수업 시 담임 선생님이 전달</small></span></label>
+          <label class="radio"><input type="radio" name="delivery" value="ship"><span><b>택배로 받기</b><small id="shipNote"></small></span></label>
+        </div>
+        <div id="addrBox" class="fg" hidden>
+          <label class="fi"><span>우편번호 *</span>
+            <span class="inline"><input id="fZip" readonly placeholder="주소 검색을 눌러주세요"><button type="button" class="btn btn-g" id="zipBtn">주소 검색</button></span>
+          </label>
+          <label class="fi s2"><span>주소 *</span><input id="fAddr1" readonly></label>
+          <label class="fi s2"><span>상세 주소 *</span><input id="fAddr2" placeholder="동/호수"></label>
+          <label class="fi s2"><span>배송 메모</span><input id="fMemo" placeholder="문 앞에 놓아주세요"></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="ct">결제 수단</h3>
+        <div id="payment-method"></div>
+        <div id="agreement"></div>
+        <p class="pay-off" id="payOff" hidden>결제 모듈을 불러오지 못했습니다. 인터넷 연결을 확인하시거나 잠시 후 다시 시도해주세요.</p>
+      </section>
+    </div>
+
+    <aside class="co-side">
+      <section class="card sticky">
+        <h3 class="ct">결제 금액</h3>
+        <dl class="amt">
+          <div><dt>교재 금액</dt><dd id="aSub">0원</dd></div>
+          <div><dt>배송비</dt><dd id="aShip">0원</dd></div>
+          <div class="total"><dt>최종 결제 금액</dt><dd id="aTotal">0원</dd></div>
+        </dl>
+        <label class="agree"><input type="checkbox" id="agreeAll"> <span>주문 내용을 확인했으며 <a href="#" data-policy="terms">이용약관</a>, <a href="#" data-policy="privacy">개인정보 수집·이용</a>, <a href="#" data-policy="refund">교환·환불 정책</a>에 동의합니다. *</span></label>
+        <button class="btn btn-p btn-lg" id="payBtn">결제하기</button>
+        <p class="err" id="coErr" role="alert"></p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<!-- ───────── 장바구니 서랍 ───────── -->
+<div class="dim" id="dim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="장바구니" aria-hidden="true">
+  <div class="drawer-hd"><b>장바구니</b><button class="x" id="closeCart" aria-label="닫기">✕</button></div>
+  <ul class="cart-list" id="cartList"></ul>
+  <div class="drawer-ft">
+    <dl class="amt">
+      <div><dt>교재 금액</dt><dd id="cSub">0원</dd></div>
+      <div class="hint" id="cHint"></div>
+    </dl>
+    <button class="btn btn-p btn-lg" id="goCheckout">주문하기</button>
+  </div>
+</aside>
+
+<!-- ───────── 약관 팝업 ───────── -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="drawer-hd"><b id="mTitle"></b><button class="x" id="mClose" aria-label="닫기">✕</button></div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<footer class="ft" id="footer"></footer>
+
+<script src="products.js"></script>
+<script src="common.js"></script>
+<script src="https://js.tosspayments.com/v2/standard"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>
