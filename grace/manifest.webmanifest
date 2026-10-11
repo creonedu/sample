@@ -1,0 +1,16 @@
+{
+  "name": "은혜의 순간 · 들벗교회",
+  "short_name": "은혜의 순간",
+  "description": "일상의 순간을 모네의 그림처럼 담아 감사일기와 말씀을 나누는 앱",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf7f1",
+  "theme_color": "#faf7f1",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
