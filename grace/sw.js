@@ -1,5 +1,5 @@
 /* 은혜의 순간 — 오프라인에서도 앱이 열리도록 화면 파일을 보관합니다. */
-const CACHE = 'grace-v1';
+const CACHE = 'grace-v2';
 const SHELL = ['./', 'index.html', 'style.css', 'app.js', 'monet.js', 'verses.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-180.png'];
 
 self.addEventListener('install', (e) => {
