@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>은혜의 순간 · 들벗교회</title>
+<meta name="description" content="일상의 순간을 사진으로 담아 모네의 그림처럼 바꾸고, 감사일기와 말씀을 함께 나누는 들벗교회 앱">
+<meta name="theme-color" content="#faf7f1">
+<meta property="og:title" content="은혜의 순간 · 들벗교회">
+<meta property="og:description" content="일상의 순간에서 하나님의 은혜를 발견하는 감사일기">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="은혜의 순간">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- 상단바 (홈이 아닐 때) -->
+  <header class="bar" id="bar" hidden>
+    <button class="icon-btn" id="backBtn" aria-label="뒤로">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <ol class="steps" id="steps" aria-label="진행 단계">
+      <li>그림</li><li>감사</li><li>말씀</li><li>나눔</li>
+    </ol>
+    <span class="icon-btn" aria-hidden="true"></span>
+  </header>
+
+  <!-- 1. 홈 -->
+  <main class="view" id="viewHome">
+    <section class="hero">
+      <p class="church">들벗교회</p>
+      <h1 class="title">은혜의 순간</h1>
+      <p class="lead">스쳐 지나가는 일상 속에서<br>하나님의 은혜를 발견하세요.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="cameraBtn">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 8h3l1.6-2h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          지금 이 순간 담기
+        </button>
+        <button class="btn btn-ghost" id="galleryBtn">앨범에서 고르기</button>
+      </div>
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+      <input type="file" id="galleryInput" accept="image/*" hidden>
+    </section>
+
+    <section class="journal">
+      <div class="journal-hd">
+        <h2>나의 은혜 기록</h2>
+        <span class="count" id="entryCount"></span>
+      </div>
+      <div class="grid" id="entryGrid"></div>
+      <p class="empty" id="emptyMsg">아직 기록이 없어요.<br>오늘의 첫 번째 은혜를 담아 보세요.</p>
+    </section>
+
+    <footer class="foot">사진과 일기는 이 휴대폰 안에만 저장됩니다.</footer>
+  </main>
+
+  <!-- 2. 모네 풍 그림 -->
+  <main class="view" id="viewPaint" hidden>
+    <h2 class="v-title">빛으로 그린 오늘</h2>
+    <p class="v-sub" id="paintStatus">붓터치를 올리고 있어요…</p>
+    <div class="frame">
+      <canvas id="paintCanvas"></canvas>
+      <div class="progress" id="paintProgress"><span></span></div>
+    </div>
+    <div class="row">
+      <button class="btn btn-ghost" id="repaintBtn" disabled>다시 그리기</button>
+      <button class="btn btn-primary" id="toWriteBtn" disabled>감사 적기</button>
+    </div>
+  </main>
+
+  <!-- 3. 감사일기 -->
+  <main class="view" id="viewWrite" hidden>
+    <p class="date" id="writeDate"></p>
+    <h2 class="v-title">이 순간, 무엇이 감사한가요?</h2>
+    <img class="thumb" id="writeThumb" alt="">
+    <textarea id="diary" maxlength="500" rows="7" placeholder="작고 평범한 순간이어도 괜찮아요.&#10;그 안에 머문 하나님의 손길을 적어 보세요."></textarea>
+    <div class="chips" id="chips">
+      <button type="button" data-t="오늘 고마웠던 사람은 ">고마운 사람</button>
+      <button type="button" data-t="오늘 아름다웠던 것은 ">아름다운 것</button>
+      <button type="button" data-t="이 순간 하나님께 드리고 싶은 고백은 ">드리고 싶은 고백</button>
+    </div>
+    <p class="counter"><span id="diaryCount">0</span> / 500</p>
+    <button class="btn btn-primary block" id="toVerseBtn" disabled>어울리는 말씀 찾기</button>
+  </main>
+
+  <!-- 4. 말씀 추천 -->
+  <main class="view" id="viewVerse" hidden>
+    <h2 class="v-title">오늘의 기록에 어울리는 말씀</h2>
+    <p class="v-sub">마음에 닿는 말씀 하나를 골라 주세요.</p>
+    <div class="verses" id="verseList" role="radiogroup" aria-label="추천 말씀"></div>
+    <button class="link-btn" id="moreVerseBtn">다른 말씀 보기</button>
+    <button class="btn btn-primary block" id="toCardBtn" disabled>은혜 카드 만들기</button>
+  </main>
+
+  <!-- 5. 카드 / 저장 · 공유 -->
+  <main class="view" id="viewCard" hidden>
+    <h2 class="v-title">은혜의 순간이 담겼어요</h2>
+    <div class="card-wrap"><canvas id="cardCanvas" width="1080" height="1350"></canvas></div>
+    <label class="toggle">
+      <input type="checkbox" id="includeDiary" checked>
+      <span>카드에 감사일기 함께 담기</span>
+    </label>
+    <div class="row">
+      <button class="btn btn-ghost" id="saveImgBtn">이미지 저장</button>
+      <button class="btn btn-primary" id="shareBtn">공유하기</button>
+    </div>
+    <button class="link-btn" id="doneBtn">완료</button>
+  </main>
+
+  <!-- 6. 기록 보기 -->
+  <main class="view" id="viewDetail" hidden>
+    <div class="card-wrap"><img id="detailImg" alt="은혜 카드"></div>
+    <p class="date" id="detailDate"></p>
+    <p class="detail-text" id="detailText"></p>
+    <blockquote class="detail-verse"><p id="detailVerse"></p><cite id="detailRef"></cite></blockquote>
+    <div class="row">
+      <button class="btn btn-ghost" id="detailSaveBtn">이미지 저장</button>
+      <button class="btn btn-primary" id="detailShareBtn">공유하기</button>
+    </div>
+    <button class="link-btn danger" id="deleteBtn">이 기록 지우기</button>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="verses.js"></script>
+<script src="monet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
